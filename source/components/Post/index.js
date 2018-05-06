@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import avatar from 'theme/assets/homer';
+import React, {Component} from 'react';
 import moment from 'moment';
 import Styles from './styles.m.css';
 
 export class Post extends Component {
-    render () {
+    render() {
 
         const {
             avatar,
+            comment,
             currentUserFirstName,
             currentUserLastName,
         } = this.props;
 
         return (
-            <section className = { Styles.post }>
-                <p><img alt = { currentUserLastName } src = { avatar } /></p>
-                <a>{ currentUserFirstName } { currentUserLastName }</a>
-                <p><time>{moment().format('MMMM D h:mm:ss a')}</time></p>
-                <p>Time to tea { currentUserFirstName } { currentUserLastName }</p>
+            <section className={Styles.post}>
+                <img alt={currentUserLastName} src={avatar}/>
+                <a>{currentUserFirstName} {currentUserLastName}</a>
+                <time>{moment().format('MMMM D h:mm:ss a')}</time>
+                <p>{comment}</p>
             </section>
         );
     }
