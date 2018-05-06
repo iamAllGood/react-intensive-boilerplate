@@ -9,6 +9,15 @@ export class Composer extends Component {
         comment: 'Hello',
     };
 
+    _generateDontCopy = (event) => {
+        return event.preventDefault();
+    }
+
+    _generateEnterPost = (event) => {
+        if (event.keyCode == 13)
+        this.handleSubmit(event);
+    }
+
     static propTypes = {
         createPost: func.isRequired,
     }
@@ -50,6 +59,8 @@ export class Composer extends Component {
                             <form onSubmit={this.handleSubmit}>
                                 <img alt='homer' src={avatar}/>
                                 <textarea
+                                    onCopy={ this._generateDontCopy}
+                                    onKeyDown={this._generateEnterPost}
                                     placeholder={`What's in your mind, ${currentUserFirstName}`}
                                     value={comment}
                                     onChange={this.handleTextAreachange}

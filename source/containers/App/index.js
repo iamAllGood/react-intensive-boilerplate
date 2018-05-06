@@ -1,10 +1,12 @@
 // Core
-import React, { Component } from 'react';
+import React, { Component, StrictMode } from 'react';
 import { hot } from 'react-hot-loader';
 
 import { Feed } from 'components/Feed';
 import avatar from 'theme/assets/homer';
 import { Provider } from "components/HOC/withProfiler";
+
+import Catcher from 'components/Catcher';
 
 const config = {
     avatar,
@@ -16,9 +18,13 @@ const config = {
 export default class App extends Component {
     render () {
         return (
-            <Provider value = { config }>
-                <Feed { ...config } />
-            </Provider>
+        //    <StrictMode>
+            <Catcher>
+                <Provider value = { config }>
+                    <Feed { ...config } />
+                </Provider>
+        </Catcher>
+        //    </StrictMode>
         );
     }
 }
