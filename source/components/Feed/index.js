@@ -9,7 +9,9 @@ import Catcher from 'components/Catcher';
 import CountsPosts from 'components/CountsPosts';
 import { api, TOKEN, GROUP_ID } from 'config/api';
 import { socket } from "socket";
-
+import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
+import Spiner from 'components/Spiner';
+import { fromTo } from 'gsap';
 
 export class Feed extends Component {
 
@@ -85,8 +87,14 @@ export class Feed extends Component {
         });
     }
 
+    _setPostFetchingState = (state) => {
+        this.setState(() => ({
+            isPostsFetching: state,
+        }));
+    }
 
     _fetchPosts () {
+        this._setPostFetchingState(true);
         fetch(api)
             .then((response) => {
                 if (response.status != 200) {
@@ -100,13 +108,17 @@ export class Feed extends Component {
                 this.setState(({ posts }) => ({
                     posts: [...data, ...posts],
                 }));
+
+                this._setPostFetchingState(false)
             })
             .catch(({ message }) => {
                 console.error(message);
+                this._setPostFetchingState(false)
             });
     }
 
     _createPost (comment) {
+        this._setPostFetchingState(true)
         fetch(api, {
             method:  'POST',
             headers: {
@@ -126,9 +138,13 @@ export class Feed extends Component {
                 this.setState(({ posts }) => ({
                     posts: [data, ...posts],
                 }));
+
+                this._setPostFetchingState(false);
             })
             .catch(({ message }) => {
                 console.error(message);
+
+                this._setPostFetchingState(false);
             });
     }
 
@@ -182,6 +198,13 @@ export class Feed extends Component {
         }
     }
 
+    _handleComposerApper = (composer) => {
+        fromTo(composer, 1, { opacity: 0}, { opacity: 1});
+    }
+
+    _handleCounterApper = (counter) => {
+        fromTo(counter, 1, { x: 400,  opacity: 1}, { x: 0,  opacity: 1});
+    }
 
     render () {
 
@@ -193,34 +216,60 @@ export class Feed extends Component {
         } = this.props;
 
         const { posts } = this.state;
+        const { isPostsFetching } = this.state;
 
         const renderPosts = posts.map((post) =>
 
-            (<Catcher key = { post.id }>
-                <Post
-                    { ...post }
-                    currentUserFirstName = { currentUserFirstName }
-                    currentUserLastName = { currentUserLastName }
-                    likePost = { this.likePost }
-                    removedPost = { this.removedPost }
-
-                />
-            </Catcher>)
+            (<CSSTransition
+                classNames = { {
+                    enter:          Styles.postInStart,
+                    enterActive:    Styles.postInEnd,
+                    exit:           Styles.postOutStart,
+                    exitActive:     Styles.postOutEnd,
+                } }
+                key = { post.id }
+                timeout = { { enter: 500, exit: 400 } }>
+                <Catcher>
+                    <Post
+                        { ...post }
+                        currentUserFirstName = { currentUserFirstName }
+                        currentUserLastName = { currentUserLastName }
+                        likePost = { this.likePost }
+                        removedPost = { this.removedPost }
+                    />
+                </Catcher>
+            </CSSTransition>
+            )
         );
 
         return (
             <section className = { Styles.feed }>
                 <StatusBar />
+                <Spiner isSpinning = { isPostsFetching }/>
+                <Transition
+                    appear
+                    in
+                    timeout = { 1000 }
+                    onEnter = { this._handleComposerApper } >
                 <Composer
                     avatar = { avatar }
                     createPost = { this.createPost }
                     currentUserFirstName = { currentUserFirstName }
                 />
+                </Transition>
+                <Transition
+                    appear
+                    in
+                    timeout = { 1000 }
+                    onEnter = { this._handleCounterApper } >
                 <CountsPosts
                     countsPosts = { posts.length }
                     userName = { `${currentUserFirstName} ${currentUserLastName}` }
                 />
-                {renderPosts}
+                </Transition>
+                <TransitionGroup>
+                    {renderPosts}
+                </TransitionGroup>
             </section>
         );
     }

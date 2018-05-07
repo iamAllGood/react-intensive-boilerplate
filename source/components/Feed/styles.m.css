@@ -4,4 +4,31 @@
     align-items: center;
     min-height: 100vh;
     background-color: var(--paletteColor3);
+
+& .postInStart {
+      //transform: scale(.5);
+      transform: translateX(-300px);
+      opacity: .01;
+  }
+
+& .postInEnd {
+      //transform: scale(1);
+      transform: translateX(-150px);
+      transition: opacity 500ms var(--cubic1),
+      transform 500ms var(--cubic1);
+      opacity: 1;
+  }
+
+& .postOutStart {
+      //transform: scale(1);
+      transform: translateX(0px);
+      opacity: 1;
+  }
+
+& .postOutEnd {
+      //transform: scale(.5);
+      transform: translateX(300px);
+      transition: opacity 400ms var(--cubic2), transform 400ms var(--cubic2);
+      opacity: .01;
+  }
 }
