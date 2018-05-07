@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { string } from 'prop-types';
 import { getUniqueID } from 'instruments';
-import { Composer } from 'components/Composer';
+import Composer from 'components/Composer';
 import { Post } from 'components/Post';
 import Styles from './styles.m.css';
 import StatusBar from 'components/StatusBar';
@@ -32,7 +32,6 @@ export class Feed extends Component {
     }
 
 
-
     _fetchPosts () {
         fetch(api)
             .then((response) => {
@@ -55,35 +54,36 @@ export class Feed extends Component {
 
     _createPost (comment) {
         fetch(api, {
-            method: 'POST',
+            method:  'POST',
             headers: {
-                Authorization: TOKEN,
+                Authorization:  TOKEN,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ comment})
+            body: JSON.stringify({ comment }),
         })
             .then((response) => {
                 if (response.status != 200) {
                     throw new Error('create post failed!');
                 }
+
                 return response.json();
             })
             .then(({ data }) => {
-                this.setState(({posts}) => ({
+                this.setState(({ posts }) => ({
                     posts: [data, ...posts],
                 }));
             })
             .catch(({ message }) => {
                 console.error(message);
             });
-        }
+    }
 
-        // if (!comment) {
-        //     return;
-        // }
-        // this.setState(({ posts }) => ({
-        //     posts: [{ id: getUniqueID(), comment }, ...posts],
-        // }));
+    // if (!comment) {
+    //     return;
+    // }
+    // this.setState(({ posts }) => ({
+    //     posts: [{ id: getUniqueID(), comment }, ...posts],
+    // }));
 
 
     render () {
@@ -100,7 +100,7 @@ export class Feed extends Component {
 
             (<Catcher key = { post.id }>
                 <Post
-                    {...post}
+                    { ...post }
                 />
             </Catcher>)
         );

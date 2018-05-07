@@ -36,7 +36,7 @@ export class Post extends Component {
 
     render () {
         // console.log(this.props.id, ' ---> render');
-        //   undefined();
+        // undefined();
         const {
             avatar,
             comment,
@@ -50,9 +50,9 @@ export class Post extends Component {
         return (
             <section className = { Styles.post }>
                 <img alt = { avatar } src = { avatar } />
-                <a>{`${firstName} ${lastName}`}</a>
+                <a>{`${ firstName } ${ lastName }`}</a>
                 <time>{moment.unix(created).format('MMMM D h:mm:ss a')}</time>
-                <p>{comment}</p>
+                <p>{ comment }</p>
             </section>
         );
     }

@@ -5,13 +5,29 @@ import cx from 'classnames';
 // Instruments
 import Styles from './styles.m.css';
 
+import { socket } from "socket";
+
 // Components
 import { Consumer } from 'components/HOC/withProfiler';
 
 export default class StatusBar extends Component {
-    state = {
-        online: false,
-    };
+     state = {
+         online: false,
+     };
+
+    componentDidMount () {
+        socket.on('connect', () => {
+            this.setState({
+                online: true,
+            });
+        });
+
+        socket.on('disconnect', () => {
+            this.setState({
+                online: false,
+            });
+        });
+    }
 
     render () {
         const { online } = this.state;
@@ -33,10 +49,10 @@ export default class StatusBar extends Component {
             <Consumer>
                 {
                     ({
-                         avatar,
-                         currentUserFirstName,
-                         currentUserLastName,
-                     } = {}) => (
+                        avatar,
+                        currentUserFirstName,
+                        currentUserLastName,
+                    } = {}) => (
                         <section className = { Styles.statusBar }>
                             <div className = { statusStyle }>
                                 <div>{ statusMessage }</div>
