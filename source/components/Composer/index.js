@@ -62,7 +62,7 @@ class Composer extends Component {
                         onChange={this.handleTextAreachange}
                         onCopy={this._generateDontCopy}
                         onKeyDown={this._generateEnterPost}
-                        // value = {comment}
+                        value = {comment}
                         placeholder={`What's in your mind, ${currentUserFirstName}`}
                     />
                     <input type='submit' value='Post'/>
