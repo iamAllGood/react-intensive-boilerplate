@@ -12,6 +12,7 @@ const config = {
     avatar,
     currentUserFirstName: 'Денис',
     currentUserLastName:  'Грошков',
+    comment4U: 'Hi!'
 };
 
 @hot(module)

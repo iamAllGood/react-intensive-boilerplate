@@ -12,6 +12,7 @@ import { socket } from "socket";
 import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
 import Spiner from 'components/Spiner';
 import { fromTo } from 'gsap';
+import { Postman } from 'components/Postman';
 
 export class Feed extends Component {
 
@@ -204,8 +205,16 @@ export class Feed extends Component {
 
     _handleCounterApper = (counter) => {
         fromTo(counter, 1, { x: 400,  opacity: 1}, { x: 0,  opacity: 1});
+
     }
 
+    _handleComment4UApper = (comment4U) => {
+        fromTo(comment4U, 2, { x: 400,  opacity: 0}, { x: 0,  opacity: 1});
+    }
+
+    _handleComment4UDisApper = (comment4U) => {
+        fromTo(comment4U, 2, { x: 0,  opacity: 1}, { x: 400,  opacity: 0});
+    }
     render () {
 
 
@@ -256,6 +265,14 @@ export class Feed extends Component {
                     createPost = { this.createPost }
                     currentUserFirstName = { currentUserFirstName }
                 />
+                </Transition>
+                <Transition
+                    appear
+                    in
+                    timeout = { 3000 }
+                    onEnter = { this._handleComment4UApper }
+                    onEntered = { this._handleComment4UDisApper }>
+                <Postman/>
                 </Transition>
                 <Transition
                     appear
