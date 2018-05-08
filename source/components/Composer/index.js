@@ -3,7 +3,7 @@ import Styles from './styles.m.css';
 import { withProfile } from 'components/HOC/withProfiler';
 import { func } from 'prop-types';
 
-class Composer extends Component {
+export class Composer extends Component {
 
     state = {
         comment: 'Hello',
@@ -25,8 +25,8 @@ class Composer extends Component {
 
     constructor () {
         super();
-        this.handleTextAreachange = this._handleTextAreachange.bind(this);
-        this.handleSubmit = ::this._handleSubmit;
+        this.handleTextAreachange   = ::this._handleTextAreachange;
+        this.handleSubmit           = ::this._handleSubmit;
     }
 
     _handleTextAreachange (e) {
@@ -40,8 +40,8 @@ class Composer extends Component {
     _handleSubmit (e) {
 
         e.preventDefault();
-        const { comment } = this.state;
-        const { createPost } = this.props;
+        const { comment }       = this.state;
+        const { createPost }    = this.props;
 
         createPost(comment);
         this.setState({
@@ -55,17 +55,17 @@ class Composer extends Component {
         const { avatar, currentUserFirstName } = this.props;
 
         return (
-            <section className={Styles.composer}>
-                <form onSubmit={this.handleSubmit}>
-                    <img alt='homer' src={avatar}/>
+            <section className = { Styles.composer } >
+                <form onSubmit = { this.handleSubmit } >
+                    <img alt = 'homer' src = { avatar } />
                     <textarea
-                        onChange={this.handleTextAreachange}
-                        onCopy={this._generateDontCopy}
-                        onKeyDown={this._generateEnterPost}
-                        value = {comment}
-                        placeholder={`What's in your mind, ${currentUserFirstName}`}
+                        onChange    = { this.handleTextAreachange }
+                        onCopy      = { this._generateDontCopy }
+                        onKeyDown   = { this._generateEnterPost }
+                        value       = { comment }
+                        placeholder = { `What's in your mind, ${ currentUserFirstName }` }
                     />
-                    <input type='submit' value='Post'/>
+                    <input type = 'submit' value = 'Post' />
                 </form>
             </section>
         );
