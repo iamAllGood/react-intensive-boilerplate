@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Counter should correspound to its snapshot counterpart 1`] = `
+<div>
+  undefined: 3 posts. 
+</div>
+`;

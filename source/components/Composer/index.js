@@ -43,16 +43,28 @@ export class Composer extends Component {
         const { comment }       = this.state;
         const { createPost }    = this.props;
 
-        createPost(comment);
-        this.setState({
-            comment: '',
-        });
+        ///////////////// test //////////////////////////////////
+        // fetch('httpshttps://jsonplaceholder.typicode.com/users')
+        //     .then((result) => {
+        //         return result.json(),
+        //     })
+        //     .then((data) => {
+        //         console.log(data),
+        //     });
+        ///////////////// test //////////////////////////////////
+
+        if (comment) {
+            createPost(comment);
+            this.setState({
+                comment: '',
+            });
+        }
     }
 
     render () {
 
-        const { comment } = this.state;
-        const { avatar, currentUserFirstName } = this.props;
+        const { comment }                       = this.state;
+        const { avatar, currentUserFirstName }  = this.props;
 
         return (
             <section className = { Styles.composer } >

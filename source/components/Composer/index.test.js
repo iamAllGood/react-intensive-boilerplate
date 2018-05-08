@@ -20,7 +20,18 @@ const mutatedState = {
     comment: message,
 };
 
-const result = mount(<Composer { ...props } />);
+const result    = mount(<Composer { ...props } />);
+const spy       = jest.spyOn(Composer.prototype, 'render');
+
+// global.fetch = jest.fn(() => Promise.resolve({
+//     status: 200,
+//     json:   jest.fn(() => Promise.resolve({ data: ['some fake data']})),
+// }));
+
+// global.fetch = Promise.resolve(() => ({
+//     status: 200,
+//     json:   jest.fn(() => Promise.resolve({ data: [] })),
+// }));
 
 console.log(result.debug());
 
@@ -84,5 +95,10 @@ describe('Composer component: ', () => {
     test('component state and textarea value reflect according form submit', () => {
         result.find('form').simulate('submit');
         expect(result.state()).toEqual( { comment: '' } );
+    });
+
+    test('createPost method should be invoked once after form submitted', () => {
+        console.log(spy.mock);
+        expect(props.createPost.mock.calls).toHaveLength(1);
     });
 });
