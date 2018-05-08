@@ -37,7 +37,7 @@ export const withApi = (Enchanced) =>
             //    console.log(createdPost);
 
             if (
-                `${currentUserFirstName} ${currentUserLastName}` !=
+                `${currentUserFirstName} ${currentUserLastName}` !==
                     `${meta.authorFirstName} ${meta.authorLastName}`
 
             ) {
@@ -51,7 +51,7 @@ export const withApi = (Enchanced) =>
                 //       console.log(createdPost);
 
                 if (
-                    `${currentUserFirstName} ${currentUserLastName}` !=
+                    `${currentUserFirstName} ${currentUserLastName}` !==
                         `${meta.authorFirstName} ${meta.authorLastName}`
 
                 ) {
